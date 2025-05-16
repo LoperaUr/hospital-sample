@@ -1,12 +1,11 @@
 package com.sample.hospital.persistence.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
-@Getter
 @Setter
-@ToString
-@RequiredArgsConstructor
+@Getter
 @Entity
 @Table(name = "person")
 public class Person {
@@ -24,7 +23,8 @@ public class Person {
     @Column(name = "state")
     private boolean state;
 
-    @Column(name = "type")
-    private boolean type;
+    @ManyToOne
+    @JoinColumn(name = "type_id", referencedColumnName = "id")
+    private PersonType type;
 
 }

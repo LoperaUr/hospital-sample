@@ -1,8 +1,11 @@
 package com.sample.hospital.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+
+@Setter
+@Getter
 public class PersonDTO {
 
     private Long id;
@@ -13,6 +16,8 @@ public class PersonDTO {
 
     private boolean state;
 
-    private boolean type;
+    private int typeId;
+
+    private String typeName;
 
 }
