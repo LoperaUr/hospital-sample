@@ -7,4 +7,6 @@ import java.util.List;
 public interface IPersonService {
 
     List<PersonDTO> getAllPersons();
+
+    List<PersonDTO> getPersonsByTypeId(int typeId);
 }
