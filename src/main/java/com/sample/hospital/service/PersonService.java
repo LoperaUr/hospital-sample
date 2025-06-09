@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.sample.hospital.util.HospitalConstants.EMPTY_ERROR;
+import static com.sample.hospital.util.Extra.validateListNotEmpty;
 
 @Service
 public class PersonService implements IPersonService {
@@ -27,20 +27,17 @@ public class PersonService implements IPersonService {
     @Override
     public List<PersonDTO> getAllPersons() {
         List<Person> persons = personRepository.findAll();
-        validatePersonNotEmpty(persons);
+        validateListNotEmpty(persons);
         return personMapper.toDtoList(persons);
     }
 
     @Override
-    public List<PersonDTO> getPersonsByTypeId(int typeId) {
-        List<Person> persons = personRepository.findByTypeId((long) typeId);
-        validatePersonNotEmpty(persons);
-        return personMapper.toDtoList(persons);
+    public Person savePerson(Person person) {
+        if (person == null) {
+            throw new AppException("Person cannot be null", HttpStatus.BAD_REQUEST);
+        }
+        return personRepository.save(person);
     }
 
-    private static void validatePersonNotEmpty(List<Person> persons) {
-        if (persons.isEmpty()) {
-            throw new AppException(EMPTY_ERROR, HttpStatus.NOT_FOUND);
-        }
-    }
+
 }

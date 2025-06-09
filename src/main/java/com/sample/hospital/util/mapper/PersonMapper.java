@@ -11,12 +11,12 @@ public interface PersonMapper {
 
     Person toEntity(PersonDTO personDTO);
 
-    @Mapping(source = "type.id", target = "typeId")
-    @Mapping(source = "type.type", target = "typeName")
+//    @Mapping(source = "type.id", target = "typeId")
+//    @Mapping(source = "type.type", target = "typeName")
     PersonDTO toDto(Person person);
 
-    @Mapping(source = "type.id", target = "typeId")
-    @Mapping(source = "type.type", target = "typeName")
+//    @Mapping(source = "type.id", target = "typeId")
+//    @Mapping(source = "type.type", target = "typeName")
     List<PersonDTO> toDtoList(List<Person> person);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

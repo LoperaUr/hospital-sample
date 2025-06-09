@@ -5,10 +5,7 @@ import com.sample.hospital.service.IPersonService;
 import com.sample.hospital.util.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,11 +24,4 @@ public class PersonController {
         return new Response<>(HttpStatus.OK, SUCCESS, personResult);
     }
 
-    @GetMapping("/by-type")
-    public Response<List<PersonDTO>> getPersonsByTypeId(
-            @RequestParam() int typeId
-    ) {
-        var persons = personService.getPersonsByTypeId(typeId);
-        return new Response<>(HttpStatus.OK, SUCCESS, persons);
-    }
 }
