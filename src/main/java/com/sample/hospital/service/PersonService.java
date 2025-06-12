@@ -9,8 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
-import static com.sample.hospital.util.Extra.validateListNotEmpty;
+import static com.sample.hospital.util.HospitalUtils.validateListNotEmpty;
 
 @Service
 public class PersonService implements IPersonService {
@@ -36,7 +37,8 @@ public class PersonService implements IPersonService {
         if (person == null) {
             throw new AppException("Person cannot be null", HttpStatus.BAD_REQUEST);
         }
-        return personRepository.save(person);
+        Optional<Person> personResult = personRepository.findByEmail(person.getEmail());
+        return personResult.orElseGet(() -> personRepository.save(person));
     }
 
 

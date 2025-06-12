@@ -1,7 +1,11 @@
 package com.sample.hospital.service;
 
-import com.sample.hospital.persistence.model.Doctor;
+import com.sample.hospital.dto.DoctorDTO;
+
+import java.util.List;
 
 public interface IDoctorService {
-    Doctor saveDoctor(Doctor doctor);
+    DoctorDTO saveDoctor(DoctorDTO doctor);
+
+    List<DoctorDTO> getAllDoctors();
 }

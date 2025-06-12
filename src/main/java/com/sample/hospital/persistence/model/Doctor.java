@@ -21,9 +21,9 @@ public class Doctor {
     @ToString.Exclude
     private Person person;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 25)
     private String specialty;
 
-    @Column(name = "license_number", unique = true, nullable = false)
+    @Column(name = "license_number", unique = true, nullable = false, length = 20)
     private String licenseNumber;
 }

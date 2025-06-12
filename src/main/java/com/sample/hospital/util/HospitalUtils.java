@@ -7,7 +7,7 @@ import java.util.List;
 
 import static com.sample.hospital.util.HospitalConstants.EMPTY_ERROR;
 
-public class Extra {
+public class HospitalUtils {
 
     public static void validateListNotEmpty(List<?> list) {
         if (list.isEmpty()) {
@@ -15,6 +15,6 @@ public class Extra {
         }
     }
 
-    private Extra() {
+    private HospitalUtils() {
     }
 }
