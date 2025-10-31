@@ -4,9 +4,7 @@ const $ = (sel) => document.querySelector(sel);
 
 // elementos
 const doctorsList = $('#doctors-list');
-const personsList = $('#persons-list');
 const refreshDoctorsBtn = $('#refresh-doctors');
-const refreshPersonsBtn = $('#refresh-persons');
 const doctorForm = $('#doctor-form');
 const messageBox = $('#message');
 const resetBtn = $('#reset-form');
@@ -56,41 +54,6 @@ async function fetchDoctors() {
   }
 }
 
-async function fetchPersons() {
-  personsList.innerHTML = '<li>Cargando...</li>';
-  try {
-    const res = await fetch(`${basePath}/person/`);
-    if (!res.ok) {
-      const text = await res.text();
-      personsList.innerHTML = `<li>Error cargando personas: HTTP ${res.status} ${text}</li>`;
-      return;
-    }
-    const payload = await res.json();
-    // El backend envuelve la respuesta en { message, data }
-    const personsRaw = payload?.data ?? payload?.body ?? payload;
-    let persons;
-    if (Array.isArray(personsRaw)) {
-      persons = personsRaw;
-    } else if (personsRaw) {
-      persons = [personsRaw];
-    } else {
-      persons = [];
-    }
-    if (persons.length === 0) {
-      personsList.innerHTML = '<li>No hay personas</li>';
-      return;
-    }
-    personsList.innerHTML = '';
-    for (const p of persons) {
-      const li = document.createElement('li');
-      li.textContent = `${p.id ?? ''} - ${p.firstName} ${p.lastName} - ${p.phoneNumber ?? ''}`;
-      personsList.appendChild(li);
-    }
-  } catch (err) {
-    personsList.innerHTML = `<li>Error cargando personas: ${err.message}</li>`;
-  }
-}
-
 function readForm() {
   return {
     person: {
@@ -126,7 +89,6 @@ async function createDoctor(evt) {
     showMessage('Doctor creado correctamente');
     doctorForm.reset();
     await fetchDoctors();
-    await fetchPersons();
   } catch (err) {
     showMessage(`Error: ${err.message}`, false);
   }
@@ -136,10 +98,8 @@ function resetForm() { doctorForm.reset(); messageBox.textContent = ''; }
 
 // eventos
 refreshDoctorsBtn.addEventListener('click', fetchDoctors);
-refreshPersonsBtn.addEventListener('click', fetchPersons);
 doctorForm.addEventListener('submit', createDoctor);
 resetBtn.addEventListener('click', resetForm);
 
 // init usando top-level await (script cargado como module)
 await fetchDoctors();
-await fetchPersons();
