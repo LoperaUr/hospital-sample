@@ -5,6 +5,9 @@ const $ = (sel) => document.querySelector(sel);
 // elementos
 const doctorsList = $('#doctors-list');
 const refreshDoctorsBtn = $('#refresh-doctors');
+const searchInput = $('#search-identifier');
+const searchBtn = $('#search-button');
+const searchResult = $('#search-result');
 const doctorForm = $('#doctor-form');
 const messageBox = $('#message');
 const resetBtn = $('#reset-form');
@@ -96,8 +99,42 @@ async function createDoctor(evt) {
 
 function resetForm() { doctorForm.reset(); messageBox.textContent = ''; }
 
+async function searchPerson() {
+  const identifier = searchInput.value.trim();
+  searchResult.textContent = '';
+  if (!identifier) {
+    searchResult.textContent = 'Introduce un email o teléfono para buscar.';
+    return;
+  }
+  searchResult.textContent = 'Buscando...';
+  try {
+    const url = `${basePath}/person/search?identifier=${encodeURIComponent(identifier)}`;
+    const res = await fetch(url);
+    if (res.status === 404) {
+      searchResult.textContent = 'No se encontró ninguna persona con ese identificador.';
+      return;
+    }
+    if (!res.ok) {
+      const text = await res.text();
+      searchResult.textContent = `Error: HTTP ${res.status} ${text}`;
+      return;
+    }
+    const payload = await res.json();
+    const person = payload?.data ?? payload?.body ?? payload;
+    if (!person) {
+      searchResult.textContent = 'No se encontró ninguna persona.';
+      return;
+    }
+    searchResult.innerHTML = `<strong>${person.firstName} ${person.lastName}</strong><br/>Email: ${person.email ?? '-'}<br/>Tel: ${person.phoneNumber ?? '-'}<br/>Género: ${person.gender ?? '-'}<br/>Fecha Nac: ${person.dateOfBirth ?? '-'} `;
+  } catch (err) {
+    searchResult.textContent = `Error buscando persona: ${err.message}`;
+  }
+}
+
 // eventos
 refreshDoctorsBtn.addEventListener('click', fetchDoctors);
+searchBtn.addEventListener('click', searchPerson);
+searchInput.addEventListener('keyup', (e)=>{ if (e.key === 'Enter') searchPerson(); });
 doctorForm.addEventListener('submit', createDoctor);
 resetBtn.addEventListener('click', resetForm);
 

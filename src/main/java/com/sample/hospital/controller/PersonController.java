@@ -24,4 +24,13 @@ public class PersonController {
         return new Response<>(HttpStatus.OK, SUCCESS, personResult);
     }
 
+    @GetMapping("/search")
+    public Response<PersonDTO> findByIdentifier(@RequestParam("identifier") String identifier) {
+        var dto = personService.findByIdentifier(identifier);
+        if (dto == null) {
+            return new Response<>(HttpStatus.NOT_FOUND, "Person not found", null);
+        }
+        return new Response<>(HttpStatus.OK, SUCCESS, dto);
+    }
+
 }

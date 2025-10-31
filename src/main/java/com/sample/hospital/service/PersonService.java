@@ -41,5 +41,20 @@ public class PersonService implements IPersonService {
         return personResult.orElseGet(() -> personRepository.save(person));
     }
 
+    @Override
+    public PersonDTO findByIdentifier(String identifier) {
+        if (identifier == null || identifier.isBlank()) {
+            return null;
+        }
+        Optional<Person> result;
+        if (identifier.contains("@")) {
+            result = personRepository.findByEmail(identifier.trim());
+        } else {
+            // buscar por número de teléfono
+            result = personRepository.findByPhoneNumber(identifier.trim());
+        }
+        return result.map(personMapper::toDto).orElse(null);
+    }
+
 
 }

@@ -10,4 +10,6 @@ public interface IPersonService {
     List<PersonDTO> getAllPersons();
 
     Person savePerson(Person person);
+
+    PersonDTO findByIdentifier(String identifier);
 }
