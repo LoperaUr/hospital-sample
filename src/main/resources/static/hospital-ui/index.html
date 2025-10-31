@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hospital UI</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Hospital - Panel de administración</h1>
+    <p class="subtitle">Consume los endpoints REST de la API (Doctor / Person)</p>
+  </header>
+
+  <main class="container">
+    <section class="card" id="doctors-section">
+      <h2>Doctores</h2>
+      <div class="controls">
+        <button id="refresh-doctors">Refrescar lista</button>
+      </div>
+      <ul id="doctors-list" class="list"></ul>
+    </section>
+
+    <section class="card" id="persons-section">
+      <h2>Personas</h2>
+      <div class="controls">
+        <button id="refresh-persons">Refrescar lista</button>
+      </div>
+      <ul id="persons-list" class="list"></ul>
+    </section>
+
+    <section class="card" id="create-section">
+      <h2>Crear Doctor</h2>
+      <form id="doctor-form">
+        <fieldset>
+          <legend>Datos personales</legend>
+          <div class="form-row">
+            <label>Nombre <input type="text" id="firstName" maxlength="30" required /></label>
+            <label>Apellido <input type="text" id="lastName" maxlength="30" required /></label>
+          </div>
+
+          <div class="form-row">
+            <label>Fecha de nacimiento <input type="date" id="dateOfBirth" /></label>
+            <label>Género
+              <select id="gender" required>
+                <option value="">--</option>
+                <option value="M">M</option>
+                <option value="F">F</option>
+                <option value="O">O</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="form-row">
+            <label>Dirección <input type="text" id="address" maxlength="100" required/></label>
+            <label>Teléfono <input type="tel" id="phoneNumber" pattern="[0-9+\- ]{10,15}" maxlength="15" required/></label>
+          </div>
+
+          <div class="form-row">
+            <label>Email <input type="email" id="email" /></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Datos profesionales</legend>
+          <div class="form-row">
+            <label>Especialidad <input type="text" id="specialty" minlength="3" maxlength="25" required/></label>
+            <label>Nº licencia <input type="text" id="licenseNumber" minlength="5" maxlength="20" required/></label>
+          </div>
+        </fieldset>
+
+        <div class="form-actions">
+          <button type="submit">Crear Doctor</button>
+          <button type="button" id="reset-form">Limpiar</button>
+        </div>
+      </form>
+
+      <div id="message" class="message"></div>
+    </section>
+  </main>
+
+  <footer>
+    <small>Front estático simple. Abre <code>/hospital-ui/index.html</code> en tu servidor Spring Boot.</small>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
