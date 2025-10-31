@@ -20,10 +20,10 @@ public class Person {
     @Column(name = "id_person")
     private Long id;
 
-    @Column(name = "first_name", nullable = false, length = 20)
+    @Column(name = "first_name", nullable = false, length = 30)
     private String firstName;
 
-    @Column(name = "last_name", nullable = false, length = 20)
+    @Column(name = "last_name", nullable = false, length = 30)
     private String lastName;
 
     @Column(name = "date_of_birth")
